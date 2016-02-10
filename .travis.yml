@@ -1,5 +1,4 @@
 language: ruby
-cache: bundler
 
 rvm:
   - 1.9.3
@@ -7,6 +6,11 @@ rvm:
   - 2.1
   - 2.2
   - jruby-19mode
+
+gemfile:
+  - gemfiles/default-with-activesupport.gemfile
+  - gemfiles/yajl.gemfile
+  - gemfiles/json.gemfile
 
 matrix:
   exclude:
