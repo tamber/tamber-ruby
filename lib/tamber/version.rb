@@ -1,3 +1,3 @@
-module Stripe
+module Tamber
   VERSION = '1.0.0'
 end

@@ -1,46 +1,54 @@
 module Tamber
   class Discover < APIResource
-    extend Tamber::APIOperations::Retrieve
 
-    def recommended_url
+    def self.recommended(params={})
+      response = request(:get, self.recommended_url, params)
+      Util.convert_to_tamber_object(response)
+    end
+
+    def self.similar(params={})
+      response = request(:get, self.similar_url, params)
+      Util.convert_to_tamber_object(response)
+    end
+
+    def self.recommendedSimilar(params={})
+      response = request(:get, self.recommendedSimilar_url, params)
+      Util.convert_to_tamber_object(response)
+    end
+
+    def self.popular(params={})
+      response = request(:get, self.popular_url, params)
+      Util.convert_to_tamber_object(response)
+    end
+
+    def self.hot(params={})
+      response = request(:get, self.hot_url, params)
+      Util.convert_to_tamber_object(response)
+    end
+
+    def self.recommended_url
       url + '/recommended'
     end
 
-    def similar_url
+    def self.similar_url
       url + '/similar'
     end
 
-    def recommended_similar_url
-      url + '/recommended_similar'
+    def self.recommendedSimilar_url
+      url + '/recommendedSimilar'
     end
 
-    def popular_url
+    def self.popular_url
       url + '/popular'
     end
 
-    def hot_url
+    def self.hot_url
       url + '/hot'
     end
 
-    def recommended(params={})
-      response = request(:post, recommended_url, params)
-    end
+  end
 
-    def similar(params={})
-      response = request(:post, similar_url, params)
-    end
-
-    def recommended_similar(params={})
-      response = request(:post, recommended_similar_url, params)
-    end
-
-    def popular(params={})
-      response = request(:post, popular_url, params)
-    end
-
-    def hot(params={})
-      response = request(:post, hot_url, params)
-    end
-
+  # Discover requests return an array of 'discovery' objects
+  class Discovery < TamberObject
   end
 end

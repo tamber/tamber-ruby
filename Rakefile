@@ -2,9 +2,9 @@ require 'rake/testtask'
 
 task :default => [:test]
 
-# Rake::TestTask.new do |t|
-#   t.pattern = './test/**/*_test.rb'
-# end
+Rake::TestTask.new do |t|
+  t.pattern = './test/*_test.rb'
+end
 
 # desc "update bundled certs"
 # task :update_certs do

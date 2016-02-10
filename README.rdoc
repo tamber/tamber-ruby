@@ -1,0 +1,71 @@
+= Tamber API Client for Ruby {<img src="https://travis-ci.org/tamber/tamber-ruby.svg?branch=master" alt="Build Status" />}[https://travis-ci.org/tamber/tamber-ruby]
+
+You can sign up for a Tamber account at https://tamber.com.
+
+For full API documentation, refer to https://tamber.com/docs/api.
+
+== Installation
+
+To use the Tamber Ruby bindings, you should run:
+
+  gem install tamber
+
+If you want to build the gem from source:
+
+  gem build tamber.gemspec
+
+
+== Compatibility
+
+We are compatible with Ruby 1.9.3 and above.
+
+
+== Usage
+
+Track Events in real time:
+
+  require 'tamber'
+  Tamber.api_key = 'your_engine_api_key'
+
+  begin
+    Tamber::Event.track(
+      :user => 'user_rlox8k927z7p',
+      :behavior => 'like'
+      :item =>  'item_wmt4fn6o4zlk',
+    )
+  rescue TamberError => error
+    puts error.message
+  end
+
+Then get recommendations:
+
+  begin
+    d = Tamber::Discover.recommended(
+      :user => 'user_rlox8k927z7p'
+    )
+    d.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
+  rescue TamberError => error
+    puts error.message
+  end
+
+
+Or do both in a single call:
+
+  require 'tamber'
+  Tamber.api_key = 'ENGINEID'
+
+  begin
+    e = Tamber::Event.track(
+      :user => 'user_rlox8k927z7p',
+      :behavior => 'like'
+      :item =>  'item_wmt4fn6o4zlk',
+      :getRecs => {}
+    )
+    puts "Recommended For User:"
+    e.recommended.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
+  rescue TamberError => error
+    puts error.message
+  end
+
+See {Tests}[https://github.com/tamber/tamber-python/blob/master/tests] for more examples.
+

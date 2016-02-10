@@ -5,17 +5,24 @@ require 'openssl'
 require 'rbconfig'
 require 'set'
 require 'socket'
+require 'base64'
 
 require 'rest-client'
 require 'json'
 
 require 'tamber/version'
 
-require 'tamber/util'
+require 'tamber/api_operations/create'
+require 'tamber/api_operations/update'
+require 'tamber/api_operations/remove'
+require 'tamber/api_operations/retrieve'
+require 'tamber/api_operations/request'
+
 require 'tamber/tamber_object'
+require 'tamber/util'
 require 'tamber/api_resource'
-require 'tamber/event'
 require 'tamber/discover'
+require 'tamber/event'
 require 'tamber/user'
 require 'tamber/item'
 require 'tamber/behavior'
@@ -26,13 +33,17 @@ require 'tamber/tamber_error'
 
 
 module Tamber
+  DEFAULT_CA_BUNDLE_PATH = File.dirname(__FILE__) + '/security/ca-certificates.crt'
+
+  @ca_bundle_path  = DEFAULT_CA_BUNDLE_PATH
+  @verify_ssl_certs = true
 
   @api_url = 'https://api.tamber.com/v1'
   @open_timeout = 30
   @read_timeout = 80
 
   class << self
-    attr_accessor :api_key, :api_base, :api_version, :open_timeout, :read_timeout
+    attr_accessor :api_key, :api_base, :api_version, :verify_ssl_certs, :open_timeout, :read_timeout
 
     # attr_reader :max_network_retry_delay, :initial_network_retry_delay
   end
@@ -42,25 +53,46 @@ module Tamber
     (api_base_url || @api_url) + url
   end
 
-  def self.request(method, url, api_key, params={}, headers={}, api_base_url=nil)
+  def self.ca_bundle_path
+    @ca_bundle_path
+  end
+
+  def self.ca_bundle_path=(path)
+    @ca_bundle_path = path
+  end
+
+  def self.request(method, url, params={})
     api_base_url = api_base_url || @api_base
 
     unless api_key ||= @api_key
-      raise AuthenticationError.new('No API key provided. ' \
-                                    'Set your engine-specific API key using "Tamber.api_key = <ENGINE-API-KEY>". ' \
-                                    'You can get your engine\'s api key from the Tamber dashboard. ' \
-                                    'See https://dashboard.tamber.com to get your engine\'s key, or ' \
-                                    'email support@tamber.com if you have any questions.)')
+      raise TamberError.new('No API key provided. ' \
+                            'Set your engine-specific API key using "Tamber.api_key = <ENGINE-API-KEY>". ' \
+                            'You can get your engine\'s api key from the Tamber dashboard. ' \
+                            'See https://dashboard.tamber.com to get your engine\'s key, or ' \
+                            'email support@tamber.com if you have any questions.)')
     end
 
     if api_key =~ /\s/
-      raise AuthenticationError.new('Your API key is invalid, as it contains ' \
-                                    'whitespace. (HINT: You can double-check your API key from the ' \
-                                    'Tamber dashboard. See https://dashboard.tamber.com to get your engine\'s key, or ' \
-                                    'email support@tamber.com if you have any questions.)')
+      raise TamberError.new('Your API key is invalid, as it contains ' \
+                            'whitespace. (HINT: You can double-check your API key from the ' \
+                            'Tamber dashboard. See https://dashboard.tamber.com to get your engine\'s key, or ' \
+                            'email support@tamber.com if you have any questions.)')
     end
 
-    params = Util.objects_to_ids(params)
+    if verify_ssl_certs
+      request_opts = {:verify_ssl => OpenSSL::SSL::VERIFY_PEER,
+                      :ssl_ca_file => @ca_bundle_path}
+    else
+      request_opts = {:verify_ssl => false}
+      unless @verify_ssl_warned
+        @verify_ssl_warned = true
+        $stderr.puts("WARNING: Running without SSL cert verification. " \
+                     "You should never do this in production. " \
+                     "Execute 'Tamber.verify_ssl_certs = true' to enable verification.")
+      end
+    end
+
+    # params = Util.objects_to_ids(params)
     url = api_url(api_base_url,url)
 
     case method.to_s.downcase.to_sym
@@ -69,26 +101,25 @@ module Tamber
       url += "#{URI.parse(url).query ? '&' : '?'}#{Util.encode_parameters(params)}" if params && params.any?
       payload = nil
     else
-      if headers[:content_type] && headers[:content_type] == "multipart/form-data"
-        payload = params
-      else
-        payload = Util.encode_parameters(params)
-      end
+      payload = Util.encode_parameters(params)
     end
 
-    request_opts = {:headers => request_headers(api_key, method).update(headers),
-                    :method => method, :open_timeout => open_timeout,
-                    :payload => payload, :url => url, :timeout => read_timeout}
+    request_opts.update(:headers => request_headers(api_key, method),
+                        :method => method, :open_timeout => open_timeout,
+                        :payload => payload, :url => url, :timeout => read_timeout)
 
     response = execute_request_with_rescues(request_opts, api_base_url)
 
     [parse(response)]
   end
 
+
+
   def self.request_headers(api_key, method)
+    encoded_key  = Base64.encode64(api_key + ':')
     headers = {
       :user_agent => "Tamber/v1 RubyBindings/#{Tamber::VERSION}",
-      :authorization => "Bearer #{api_key}",
+      :authorization => "Basic "+encoded_key,
       :content_type => 'application/x-www-form-urlencoded'
     }
 
@@ -106,7 +137,7 @@ module Tamber
     lang_version = "#{RUBY_VERSION} p#{RUBY_PATCHLEVEL} (#{RUBY_RELEASE_DATE})"
 
     {
-      :bindings_version => Stripe::VERSION,
+      :bindings_version => Tamber::VERSION,
       :lang => 'ruby',
       :lang_version => lang_version,
       :platform => RUBY_PLATFORM,
@@ -117,17 +148,24 @@ module Tamber
 
   end
 
+  def self.general_api_error(rbody)
+    TamberError.new("Invalid response object from API: "+rbody.inspect)
+  end
+
   def self.execute_request(opts)
     RestClient::Request.execute(opts)
   end
 
   def self.parse(response)
     begin
-      # Would use :symbolize_names => true, but apparently there is
-      # some library out there that makes symbolize_names not work.
       response = JSON.parse(response.body)
+      if response["success"]
+        response = response["result"]
+      else
+        raise TamberError.new("Error: "+response["error"])
+      end
     rescue JSON::ParserError
-      raise general_api_error(response.code, response.body)
+      raise general_api_error(response.body)
     end
 
     Util.symbolize_names(response)
@@ -161,3 +199,4 @@ module Tamber
 
     # response
   end
+end

@@ -1,20 +1,24 @@
 module Tamber
   class Event < APIResource
+
     extend Tamber::APIOperations::Retrieve
 
-    def track_url
+    def self.track_url
       url + '/track'
     end
 
-    def batch_url
+    def self.batch_url
       url + '/batch'
     end
 
-    def track(params={})
-      response = request(:post, track_url, params)
+    def self.track(params={})
+      response = request(:post, self.track_url, params)
+      Util.convert_to_tamber_object(response)
     end
-    def batch(params={})
-      response = request(:post, batch_url, params)
+
+    def self.batch(params={})
+      response = request(:post, self.batch_url, params)
+      Util.convert_to_tamber_object(response)
     end
   end
 end

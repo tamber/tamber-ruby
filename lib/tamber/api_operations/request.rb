@@ -3,7 +3,7 @@ module Tamber
     module Request
       module ClassMethods
         def request(method, url, params={})
-          response = Tamber.request(method, url, api_key, params, headers, api_base)
+          response = Tamber.request(method, url, params)
         end
       end
 

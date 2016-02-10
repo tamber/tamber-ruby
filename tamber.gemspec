@@ -4,10 +4,9 @@ require 'tamber/version'
 
 spec = Gem::Specification.new do |s|
   s.name = 'tamber'
-  # s.version = Tamber::VERSION
-  s.version = '1.0.0'
+  s.version = Tamber::VERSION
   s.required_ruby_version = '>= 1.9.3'
-  s.summary = 'Ruby bindings for the Stripe API'
+  s.summary = 'Ruby bindings for the Tamber API'
   s.description = 'Tamber is the easiest way to put head-scratchingly accurate, real time recommendations in your app.  See https://tamber.com for details.'
   s.homepage = 'https://tamber.com/docs/api'
   s.license = 'MIT'
@@ -15,8 +14,8 @@ spec = Gem::Specification.new do |s|
   s.add_dependency('rest-client', '~> 1.4')
   s.add_dependency('json', '~> 1.8.1')
 
-  # s.add_development_dependency('mocha', '~> 0.13.2')
-  # s.add_development_dependency('shoulda', '~> 3.4.0')
+  s.add_development_dependency('mocha', '~> 0.13.2')
+  s.add_development_dependency('shoulda', '~> 3.4.0')
   s.add_development_dependency('test-unit')
   s.add_development_dependency('rake')
 
