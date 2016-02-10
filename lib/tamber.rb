@@ -33,7 +33,7 @@ require 'tamber/tamber_error'
 
 
 module Tamber
-  DEFAULT_CA_BUNDLE_PATH = File.dirname(__FILE__) + '/security/ca-certificates.crt'
+  DEFAULT_CA_BUNDLE_PATH = File.dirname(__FILE__) + '/security/ca-bundle.crt'
 
   @ca_bundle_path  = DEFAULT_CA_BUNDLE_PATH
   @verify_ssl_certs = true
