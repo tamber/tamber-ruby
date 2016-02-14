@@ -10,6 +10,8 @@ spec = Gem::Specification.new do |s|
   s.description = 'Tamber is the easiest way to put head-scratchingly accurate, real time recommendations in your app.  See https://tamber.com for details.'
   s.homepage = 'https://tamber.com/docs/api'
   s.license = 'MIT'
+  s.authors = ['Alexi Robbins', 'Mark Canning']
+  s.email = ['alexi@tamber.com', 'argusdusty@tamber.com']
 
   s.add_dependency('rest-client', '~> 1.4')
   s.add_dependency('json', '~> 1.8.1')

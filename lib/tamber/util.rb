@@ -39,7 +39,6 @@ module Tamber
         'user' => User,
         'item' => Item,
         'behavior' => Behavior,
-        'property' => Property,
       }
     end
 

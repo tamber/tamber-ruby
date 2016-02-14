@@ -26,7 +26,6 @@ require 'tamber/event'
 require 'tamber/user'
 require 'tamber/item'
 require 'tamber/behavior'
-require 'tamber/property'
 
 
 require 'tamber/tamber_error'
