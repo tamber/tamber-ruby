@@ -7,9 +7,9 @@ module Tamber
         e = Tamber::Item.create(
           :id => 'item_i7gq90scc1',
           :properties =>  {
-            "type": "artwork",
-            "artist": "Alexander Calder",
-            "img_small": "https://imgs.acalder.png"
+            'type'=> 'artwork',
+            'artist'=> 'Alexander Calder',
+            'img_small'=> 'https://imgs.acalder.png'
           },
           :tags => ['modern', 'acryllic'],
           :created => 1454465400
