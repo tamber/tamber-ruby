@@ -42,9 +42,7 @@ module Tamber
   @read_timeout = 80
 
   class << self
-    attr_accessor :api_key, :api_base, :api_version, :verify_ssl_certs, :open_timeout, :read_timeout
-
-    # attr_reader :max_network_retry_delay, :initial_network_retry_delay
+    attr_accessor :api_key, :api_url, :api_base, :api_version, :verify_ssl_certs, :open_timeout, :read_timeout
   end
 
 

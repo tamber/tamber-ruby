@@ -16,16 +16,16 @@ module Tamber
     #   end
     # end
 
-    should "be retrievable" do
-      begin
-        e = Tamber::Event.retrieve(
-          :user => 'user_jctzgisbru',
-        )
-        puts e
-      rescue TamberError => error
-        puts error.message
-      end
-    end
+    # should "be retrievable" do
+    #   begin
+    #     e = Tamber::Event.retrieve(
+    #       :user => 'user_jctzgisbru',
+    #     )
+    #     puts e
+    #   rescue TamberError => error
+    #     puts error.message
+    #   end
+    # end
 
     # should "be batchable" do
     #   begin

@@ -42,23 +42,23 @@ module Tamber
     # end
 
 
-    should "retrieve user" do
-      begin
-        id = 'user_rubytestA'
-        u = Tamber::User.retrieve(
-          :id => id,
-          :getRecs => {
-            :number => 10
-          }
-        )
-        puts u.inspect
-        puts u.metadata
-        puts u.metadata[:name]
-        assert u.id == id
-      rescue TamberError => error
-        puts error.message
-      end
-    end
+    # should "retrieve user" do
+    #   begin
+    #     id = 'user_rubytestA'
+    #     u = Tamber::User.retrieve(
+    #       :id => id,
+    #       :getRecs => {
+    #         :number => 10
+    #       }
+    #     )
+    #     puts u.inspect
+    #     puts u.metadata
+    #     puts u.metadata[:name]
+    #     assert u.id == id
+    #   rescue TamberError => error
+    #     puts error.message
+    #   end
+    # end
 
   end
 end

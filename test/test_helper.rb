@@ -8,7 +8,7 @@ class Test::Unit::TestCase
   include Mocha
 
   setup do
-    Tamber.api_key = "IVRiX25dr5rsJ0TDdVOD"
+    Tamber.api_key = "Y2tpJMriyLnNImYKmdPd"
   end
 
   teardown do

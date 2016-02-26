@@ -2,23 +2,23 @@ require File.expand_path('../test_helper', __FILE__)
 
 module Tamber
   class ItemTest < Test::Unit::TestCase
-    should "be creatable" do
-      begin
-        e = Tamber::Item.create(
-          :id => 'item_i7gq90scc1',
-          :properties =>  {
-            'type'=> 'artwork',
-            'artist'=> 'Alexander Calder',
-            'img_small'=> 'https://imgs.acalder.png'
-          },
-          :tags => ['modern', 'acryllic'],
-          :created => 1454465400
-        )
-        puts e
-      rescue TamberError => error
-        puts error.message
-      end
-    end
+    # should "be creatable" do
+    #   begin
+    #     e = Tamber::Item.create(
+    #       :id => 'item_i7gq90scc1',
+    #       :properties =>  {
+    #         'type'=> 'artwork',
+    #         'artist'=> 'Alexander Calder',
+    #         'img_small'=> 'https://imgs.acalder.png'
+    #       },
+    #       :tags => ['modern', 'acryllic'],
+    #       :created => 1454465400
+    #     )
+    #     puts e
+    #   rescue TamberError => error
+    #     puts error.message
+    #   end
+    # end
 
     should "be updatable" do
       begin
@@ -47,7 +47,7 @@ module Tamber
     should "be retrievable" do
       begin
         e = Tamber::Item.retrieve(
-          :id => 'item_i5gq90scc1',
+          :id => 'item_i7gq90scc1',
         )
         puts e
       rescue TamberError => error
@@ -58,7 +58,7 @@ module Tamber
     should "be removable" do
       begin
         e = Tamber::Item.remove(
-          :id => 'item_i5gq90scc1',
+          :id => 'item_i7gq90scc1',
         )
         puts e
       rescue TamberError => error
