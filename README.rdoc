@@ -25,7 +25,7 @@ We are compatible with Ruby 1.9.3 and above.
 Track Events in real time:
 
   require 'tamber'
-  Tamber.api_key = 'your_engine_api_key'
+  Tamber.project_key = 'your_project_key'
 
   begin
     Tamber::Event.track(
@@ -37,7 +37,9 @@ Track Events in real time:
     puts error.message
   end
 
-Then get recommendations:
+Then get recommendations from your engine:
+  
+  Tamber.engine_key = 'your_engine_key'
 
   begin
     d = Tamber::Discover.recommended(
@@ -52,14 +54,15 @@ Then get recommendations:
 Or do both in a single call:
 
   require 'tamber'
-  Tamber.api_key = 'ENGINEID'
+  Tamber.project_key = 'your_project_key'
+  Tamber.engine_key = 'your_engine_key'
 
   begin
     e = Tamber::Event.track(
       :user => 'user_rlox8k927z7p',
       :behavior => 'like'
       :item =>  'item_wmt4fn6o4zlk',
-      :getRecs => {}
+      :get_recs => {}
     )
     puts "Recommended For User:"
     e.recommended.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}

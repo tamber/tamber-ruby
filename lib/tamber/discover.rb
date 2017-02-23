@@ -35,7 +35,7 @@ module Tamber
     end
 
     def self.recommendedSimilar_url
-      url + '/recommendedSimilar'
+      url + '/recommended_similar'
     end
 
     def self.popular_url

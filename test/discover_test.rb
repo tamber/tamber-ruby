@@ -5,11 +5,12 @@ module Tamber
     should "return recommendations" do
       begin
         d = Tamber::Discover.recommended(
-          :user => '38739',
+          :user => 'a2x03323xr',
+          :get_properties => true,
           :filter => {
             :eq => [
-              {"property" => "type"},
-              "artwork"
+              {"property" => "clothing_type"},
+              "pants"
             ]
           }
         )

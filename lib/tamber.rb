@@ -42,7 +42,7 @@ module Tamber
   @read_timeout = 80
 
   class << self
-    attr_accessor :api_key, :api_url, :api_base, :api_version, :verify_ssl_certs, :open_timeout, :read_timeout
+    attr_accessor :project_key, :engine_key, :api_base, :api_version, :verify_ssl_certs, :open_timeout, :read_timeout
   end
 
 
@@ -61,17 +61,16 @@ module Tamber
   def self.request(method, url, params={})
     api_base_url = api_base_url || @api_base
 
-    unless api_key ||= @api_key
-      raise TamberError.new('No API key provided. ' \
-                            'Set your engine-specific API key using "Tamber.api_key = <ENGINE-API-KEY>". ' \
-                            'You can get your engine\'s api key from the Tamber dashboard. ' \
-                            'See https://dashboard.tamber.com to get your engine\'s key, or ' \
+    if project_key =~ /\s/
+      raise TamberError.new('Your project key is invalid, as it contains ' \
+                            'whitespace. (HINT: You can double-check your project key from the ' \
+                            'Tamber dashboard. See https://dashboard.tamber.com to get your engine\'s key, or ' \
                             'email support@tamber.com if you have any questions.)')
     end
 
-    if api_key =~ /\s/
-      raise TamberError.new('Your API key is invalid, as it contains ' \
-                            'whitespace. (HINT: You can double-check your API key from the ' \
+    if engine_key =~ /\s/
+      raise TamberError.new('Your engine key is invalid, as it contains ' \
+                            'whitespace. (HINT: You can double-check your project key from the ' \
                             'Tamber dashboard. See https://dashboard.tamber.com to get your engine\'s key, or ' \
                             'email support@tamber.com if you have any questions.)')
     end
@@ -101,7 +100,7 @@ module Tamber
       payload = Util.encode_parameters(params)
     end
 
-    request_opts.update(:headers => request_headers(api_key, method),
+    request_opts.update(:headers => request_headers(project_key, engine_key, method),
                         :method => method, :open_timeout => open_timeout,
                         :payload => payload, :url => url, :timeout => read_timeout)
 
@@ -112,8 +111,8 @@ module Tamber
 
 
 
-  def self.request_headers(api_key, method)
-    encoded_key  = Base64.encode64(api_key + ':')
+  def self.request_headers(project_key, engine_key, method)
+    encoded_key  = Base64.encode64(project_key + ':' + engine_key)
     headers = {
       :user_agent => "Tamber/v1 RubyBindings/#{Tamber::VERSION}",
       :authorization => "Basic "+encoded_key,
