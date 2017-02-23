@@ -70,5 +70,5 @@ Or do both in a single call:
     puts error.message
   end
 
-See {Tests}[https://github.com/tamber/tamber-python/blob/master/tests] for more examples.
+See {Tests}[https://github.com/tamber/tamber-ruby/tree/master/test] for more examples.
 
