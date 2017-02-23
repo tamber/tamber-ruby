@@ -10,7 +10,7 @@ module Tamber
           :behavior => 'mention',
           :get_recs => {}
         )
-        e.recommended.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
+        puts e
       rescue TamberError => error
         puts error.message
       end

@@ -53,7 +53,6 @@ module Tamber
         )
         puts u.inspect
         puts u.metadata
-        puts u.metadata[:name]
         assert u.id == id
       rescue TamberError => error
         puts error.message

@@ -5,7 +5,7 @@ module Tamber
     should "be creatable" do
       begin
         e = Tamber::Item.create(
-          :id => 'item_i7gq90scc1',
+          :id => 'item_i5gq90scc1',
           :properties =>  {
             'type'=> 'artwork',
             'artist'=> 'Alexander Calder',
@@ -23,7 +23,7 @@ module Tamber
     should "be updatable" do
       begin
         e = Tamber::Item.update(
-          :id => 'item_i7gq90scc1',
+          :id => 'item_i5gq90scc1',
           :updates => {
             :add => {
               :properties => {
@@ -47,7 +47,7 @@ module Tamber
     should "be retrievable" do
       begin
         e = Tamber::Item.retrieve(
-          :id => 'item_i7gq90scc1',
+          :id => 'item_i5gq90scc1',
         )
         puts e
       rescue TamberError => error
@@ -58,7 +58,7 @@ module Tamber
     should "be removable" do
       begin
         e = Tamber::Item.remove(
-          :id => 'item_i7gq90scc1',
+          :id => 'item_i5gq90scc1',
         )
         puts e
       rescue TamberError => error
