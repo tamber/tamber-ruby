@@ -42,7 +42,7 @@ module Tamber
   @read_timeout = 80
 
   class << self
-    attr_accessor :project_key, :engine_key, :api_base, :api_version, :verify_ssl_certs, :open_timeout, :read_timeout
+    attr_accessor :project_key, :engine_key, :api_version, :verify_ssl_certs, :open_timeout, :read_timeout
   end
 
 
@@ -59,7 +59,6 @@ module Tamber
   end
 
   def self.request(method, url, params={})
-    api_base_url = api_base_url || @api_base
 
     if project_key =~ /\s/
       raise TamberError.new('Your project key is invalid, as it contains ' \
@@ -88,8 +87,7 @@ module Tamber
       end
     end
 
-    # params = Util.objects_to_ids(params)
-    url = api_url(api_base_url,url)
+    url = @api_url + url
 
     case method.to_s.downcase.to_sym
     when :get, :head, :delete
@@ -104,15 +102,17 @@ module Tamber
                         :method => method, :open_timeout => open_timeout,
                         :payload => payload, :url => url, :timeout => read_timeout)
 
-    response = execute_request_with_rescues(request_opts, api_base_url)
+    response = execute_request_with_rescues(request_opts)
 
     [parse(response)]
   end
 
 
 
-  def self.request_headers(project_key, engine_key, method)
-    encoded_key  = Base64.encode64(project_key + ':' + engine_key)
+  def self.request_headers(pkey, ekey, method)
+    pkey ||= ''
+    ekey ||= ''
+    encoded_key  = Base64.encode64(pkey + ':' + ekey)
     headers = {
       :user_agent => "Tamber/v1 RubyBindings/#{Tamber::VERSION}",
       :authorization => "Basic "+encoded_key,
@@ -148,6 +148,10 @@ module Tamber
     TamberError.new("Invalid response object from API: "+rbody.inspect)
   end
 
+  def self.handle_restclient_error(e, request_opts)
+    parse(e)
+  end
+
   def self.execute_request(opts)
     RestClient::Request.execute(opts)
   end
@@ -163,36 +167,36 @@ module Tamber
     rescue JSON::ParserError
       raise general_api_error(response.body)
     end
-
     Util.symbolize_names(response)
   end
 
   private
 
-  def self.execute_request_with_rescues(request_opts, api_base_url, retry_count = 0)
-    response = execute_request(request_opts)
-    # begin
-    #   response = execute_request(request_opts)
-    # rescue SocketError => e
-    #   response = handle_restclient_error(e, request_opts, retry_count, api_base_url)
-    # rescue NoMethodError => e
-    #   # Work around RestClient bug
-    #   if e.message =~ /\WRequestFailed\W/
-    #     e = APIConnectionError.new('Unexpected HTTP response code')
-    #     response = handle_restclient_error(e, request_opts, retry_count, api_base_url)
-    #   else
-    #     raise
-    #   end
-    # rescue RestClient::ExceptionWithResponse => e
-    #   if e.response
-    #     handle_api_error(e.response)
-    #   else
-    #     response = handle_restclient_error(e, request_opts, retry_count, api_base_url)
-    #   end
-    # rescue RestClient::Exception, Errno::ECONNREFUSED => e
-    #   response = handle_restclient_error(e, request_opts, retry_count, api_base_url)
-    # end
+  def self.execute_request_with_rescues(request_opts)
+    # response = execute_request(request_opts)
+    begin
+      response = execute_request(request_opts)
+    rescue SocketError => e
+      response = handle_restclient_error(e, request_opts)
+    rescue NoMethodError => e
+      # Work around RestClient bug
+      if e.message =~ /\WRequestFailed\W/
+        raise TamberError.new('Error: Unexpected HTTP response code')
+      else
+        raise
+      end
+    rescue RestClient::ExceptionWithResponse => e
+      puts "ExceptionWithResponse: #{e}"
+      if e.response
+        puts "e.response"
+        parse(e.response)
+      else
+        response = handle_restclient_error(e, request_opts)
+      end
+    rescue RestClient::Exception, Errno::ECONNREFUSED => e
+      response = handle_restclient_error(e, request_opts)
+    end
 
-    # response
+    response
   end
 end

@@ -15,8 +15,6 @@ module Tamber
           }
         )
         d.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
-      rescue TamberError => error
-        puts error.message
       end
     end
 
@@ -26,8 +24,6 @@ module Tamber
           :item => 'item_i5gq90scc1'
         )
         d.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
-      rescue TamberError => error
-        puts error.message
       end
     end
 
@@ -38,8 +34,6 @@ module Tamber
           :item => 'item_i5gq90scc1'
         )
         d.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
-      rescue TamberError => error
-        puts error.message
       end
     end
 

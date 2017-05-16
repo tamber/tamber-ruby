@@ -11,8 +11,6 @@ module Tamber
           :get_recs => {}
         )
         puts e
-      rescue TamberError => error
-        puts error.message
       end
     end
 
@@ -22,8 +20,6 @@ module Tamber
           :user => 'user_jctzgisbru',
         )
         puts e
-      rescue TamberError => error
-        puts error.message
       end
     end
 
@@ -44,8 +40,6 @@ module Tamber
           ]
         )
         puts e
-      rescue TamberError => error
-        puts error.message
       end
     end
 

@@ -18,9 +18,6 @@ module Tamber
             }
           ]
         )
-        puts u
-      rescue TamberError => error
-        puts error.message
       end
     end
 
@@ -35,9 +32,8 @@ module Tamber
           :id => id,
           :metadata => metadata
         )
+        puts "retrieved user #{u}"
         assert u.id == id
-      rescue TamberError => error
-        puts error.message
       end
     end
 
@@ -54,8 +50,6 @@ module Tamber
         puts u.inspect
         puts u.metadata
         assert u.id == id
-      rescue TamberError => error
-        puts error.message
       end
     end
 
