@@ -8,6 +8,8 @@ module Tamber
           :user => 'user_jctzgisbru',
           :item =>  'item_i5gq90scc1',
           :behavior => 'mention',
+          :hit => true,
+          :context => ['recommended', 'detail-view'],
           :get_recs => {}
         )
         puts e

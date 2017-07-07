@@ -9,6 +9,8 @@ module Tamber
           :desirability => 0.2
         )
         puts e
+      rescue TamberError => error
+        puts error.message
       end
     end
 
