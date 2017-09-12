@@ -18,6 +18,16 @@ module Tamber
       end
     end
 
+    should "return next" do
+      begin
+        d = Tamber::Discover.next(
+          :user => 'user_jctzgisbru',
+          :item => 'item_i5gq90scc1'
+        )
+        d.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
+      end
+    end
+
     should "return similar" do
       begin
         d = Tamber::Discover.similar(
