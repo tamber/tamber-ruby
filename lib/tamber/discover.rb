@@ -1,15 +1,15 @@
 module Tamber
   class Discover < APIResource
 
-    def self.recommended(params={})
-      response = request(:get, self.recommended_url, params)
-      Util.convert_to_tamber_object(response)
-    end
-    
     def self.next(params={})
       response = request(:get, self.next_url, params)
       Util.convert_to_tamber_object(response)
     end
+
+    def self.recommended(params={})
+      response = request(:get, self.recommended_url, params)
+      Util.convert_to_tamber_object(response)
+    end 
 
     def self.similar(params={})
       response = request(:get, self.similar_url, params)
@@ -33,6 +33,11 @@ module Tamber
 
     def self.uac(params={})
       response = request(:get, self.uac_url, params)
+      Util.convert_to_tamber_object(response)
+    end
+
+    def self.new(params={})
+      response = request(:get, self.new_url, params)
       Util.convert_to_tamber_object(response)
     end
 
@@ -62,6 +67,10 @@ module Tamber
 
     def self.uac_url
       url + '/uac'
+    end
+
+    def self.new_url
+      url + '/new'
     end
 
   end
