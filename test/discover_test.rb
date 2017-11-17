@@ -2,33 +2,33 @@ require File.expand_path('../test_helper', __FILE__)
 
 module Tamber
   class DiscoverTest < Test::Unit::TestCase
-    should "return next for the user" do
-      begin
-        d = Tamber::Discover.next(
-          :user => 'user_jctzgisbru'
-        )
-        d.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
-      end
-    end
+    # should "return next for the user" do
+    #   begin
+    #     d = Tamber::Discover.next(
+    #       :user => 'user_jctzgisbru'
+    #     )
+    #     d.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
+    #   end
+    # end
 
-    should "return next for the user given the current item" do
-      begin
-        d = Tamber::Discover.next(
-          :user => 'user_jctzgisbru',
-          :item => 'item_i5gq90scc1'
-        )
-        d.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
-      end
-    end
+    # should "return next for the user given the current item" do
+    #   begin
+    #     d = Tamber::Discover.next(
+    #       :user => 'user_jctzgisbru',
+    #       :item => 'item_i5gq90scc1'
+    #     )
+    #     d.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
+    #   end
+    # end
 
-    should "return next for any user (e.g. a visitor without an id) given the current item" do
-      begin
-        d = Tamber::Discover.next(
-          :item => 'item_i5gq90scc1'
-        )
-        d.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
-      end
-    end
+    # should "return next for any user (e.g. a visitor without an id) given the current item" do
+    #   begin
+    #     d = Tamber::Discover.next(
+    #       :item => 'item_i5gq90scc1'
+    #     )
+    #     d.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
+    #   end
+    # end
 
     should "return hot" do
       begin
