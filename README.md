@@ -1,4 +1,6 @@
-# Tamber API Client for Ruby [![Build Status](https://travis-ci.org/tamber/tamber-node.ruby?branch=master)](https://travis-ci.org/tamber/tamber-ruby)
+# Tamber API Client for Ruby 
+
+[![Build Status](https://travis-ci.org/tamber/tamber-node.ruby?branch=master)](https://travis-ci.org/tamber/tamber-ruby)
 
 Recommendation engines for developers, easy as π. Build blazing fast, head-scratchingly accurate hosted recommendation engines in minutes.
 
@@ -8,7 +10,7 @@ The Tamber iOS SDK makes it easy to track events (user-item interactions) and ge
 
 ## Documentation
 
-See [full API documentation][docs].
+See [full API documentation][reference].
 
 ## Installation
 
@@ -214,6 +216,7 @@ end
 
 See [Tests](https://github.com/tamber/tamber-ruby/tree/master/test) for more examples.
 
+[homepage]: https://tamber.com
 [quickstart]: https://tamber.com/docs/start/
 [reference]: https://tamber.com/docs/api
 [dashboard]: https://dashboard.tamber.com/
