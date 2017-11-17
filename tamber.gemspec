@@ -22,11 +22,11 @@ spec = Gem::Specification.new do |s|
   s.add_development_dependency('test-unit')
   s.add_development_dependency('rake')
 
-  if Gem::Version.new(RUBY_VERSION.dup) > Gem::Version.new('2.0.0')
-    s.add_development_dependency("byebug")
-    s.add_development_dependency("pry")
-    s.add_development_dependency("pry-byebug")
-  end
+  # if Gem::Version.new(RUBY_VERSION.dup) > Gem::Version.new('2.0.0')
+  #   s.add_development_dependency("byebug")
+  #   s.add_development_dependency("pry")
+  #   s.add_development_dependency("pry-byebug")
+  # end
 
   # s.files = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- test/*`.split("\n")

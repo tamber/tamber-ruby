@@ -81,16 +81,16 @@ When you want to add more recommendations to those currently displayed to the us
 
 Tamber.project_key = 'your_project_key'
 
-begin
-  d = Tamber::Discover.next(
-    user: 'user_rlox8k927z7p',
-    number: 10,
-    continuation: true
-  )
-  d.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
-rescue TamberError => error
-  puts error.message
-end
+  begin
+    d = Tamber::Discover.next(
+      user: 'user_rlox8k927z7p',
+      number: 10,
+      continuation: true
+    )
+    d.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
+  rescue TamberError => error
+    puts error.message
+  end
 
 ==== Up Next
 
