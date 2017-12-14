@@ -55,9 +55,20 @@ module Tamber
       end
     end
 
-    should "be removable" do
+    should "be hideable" do
       begin
-        e = Tamber::Item.remove(
+        e = Tamber::Item.hide(
+          :id => 'item_i5gq90scc1',
+        )
+        puts e
+      rescue TamberError => error
+        puts error.message
+      end
+    end
+
+    should "be unhideable" do
+      begin
+        e = Tamber::Item.unhide(
           :id => 'item_i5gq90scc1',
         )
         puts e

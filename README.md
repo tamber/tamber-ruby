@@ -1,6 +1,4 @@
-# Tamber API Client for Ruby 
-
-[![Build Status](https://travis-ci.org/tamber/tamber-ruby.svg?branch=master)](https://travis-ci.org/tamber/tamber-ruby)
+# Tamber API Client for Ruby  [![Build Status](https://travis-ci.org/tamber/tamber-ruby.svg?branch=master)](https://travis-ci.org/tamber/tamber-ruby)
 
 Recommendation engines for developers, easy as π. Build blazing fast, head-scratchingly accurate hosted recommendation engines in minutes.
 
