@@ -3,6 +3,7 @@ module Tamber
     extend Tamber::APIOperations::Create
     extend Tamber::APIOperations::Update
     extend Tamber::APIOperations::Retrieve
+    extend Tamber::APIOperations::List
 
     def self.search(params={})
       response = request(:post, url + '/search', params)

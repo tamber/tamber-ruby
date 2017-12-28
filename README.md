@@ -64,7 +64,7 @@ The primary method of discovery in Tamber is the `Discover.next` method, which r
 
 #### For You
 
-To put personalized recommendations on your homepage, or in any recommended section, just call `Discover.next` with the number of recommendations you want to display (if you are calling server-side, also set the `user`).
+To put personalized recommendations on your homepage, or in any recommended section, just call `Discover.next` with the given user's id and the number of recommendations you want to display.
 
 ```rb
 Tamber.project_key = 'your_project_key'
@@ -79,6 +79,24 @@ rescue TamberError => error
   puts error.message
 end
 ```
+
+#### Up Next
+
+Keep users engaged by creating a path of discovery as they navigate from item to item, always showing the right mix of items they should check out next. Just add the id of the item that the user is navigating to / looking at.
+
+```rb
+begin
+  d = Tamber::Discover.next(
+    user: 'user_rlox8k927z7p',
+    item: 'item_wmt4fn6o4zlk',
+    number: 14
+  )
+  d.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
+rescue TamberError => error
+  puts error.message
+end
+```
+
 
 ##### `continuation`
 
@@ -101,40 +119,6 @@ rescue TamberError => error
 end
 ```
 
-#### Up Next
-
-Keep users engaged by creating a path of discovery as they navigate from item to item. Just add the id of the item that the user is navigating to / looking at.
-
-```rb
-begin
-  d = Tamber::Discover.next(
-    user: 'user_rlox8k927z7p',
-    item: 'item_wmt4fn6o4zlk',
-    number: 14
-  )
-  d.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
-rescue TamberError => error
-  puts error.message
-end
-```
-
-If you are tracking events in your backend and want to track `clicked` or `viewed` events when users request the next page, you can also get `next` for the user-item pair by adding the `get_recs` field to your `Event.track` call.
-
-```rb
-begin
-  e = Tamber::Event.track(
-    user: 'user_rlox8k927z7p',
-    behavior: 'clicked'
-    item:  'item_wmt4fn6o4zlk',
-    get_recs: {
-      number: 14
-    }
-  )
-  e.recommended.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
-rescue TamberError => error
-  puts error.message
-end
-```
 
 #### Trending
 
