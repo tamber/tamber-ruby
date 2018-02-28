@@ -21,6 +21,11 @@ module Tamber
       Util.convert_to_tamber_object(response)
     end
 
+    def self.meta(params={})
+      response = request(:get, self.meta_url, params)
+      Util.convert_to_tamber_object(response)
+    end
+
     def self.popular(params={})
       response = request(:get, self.popular_url, params)
       Util.convert_to_tamber_object(response)
@@ -55,6 +60,10 @@ module Tamber
 
     def self.next_url
       url + '/next'
+    end
+
+    def self.meta_url
+      url + '/meta'
     end
 
     def self.popular_url

@@ -45,5 +45,27 @@ module Tamber
       end
     end
 
+    should "track meta like" do
+      begin
+        e = Tamber::Event.metaLike(
+          :user => 'user_jctzgisbru',
+          :property =>  'genre',
+          :value => 'sci-fi'
+        )
+        puts e
+      end
+    end
+
+    should "untrack meta like" do
+      begin
+        e = Tamber::Event.metaUnlike(
+          :user => 'user_jctzgisbru',
+          :property =>  'genre',
+          :value => 'sci-fi'
+        )
+        puts e
+      end
+    end
+
   end
 end

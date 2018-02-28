@@ -1,4 +1,5 @@
 /tamber-*.gem
+bin/tamber-*.gem
 /Gemfile.lock
 .rvmrc
 Gemfile.lock
