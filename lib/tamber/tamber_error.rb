@@ -5,6 +5,13 @@ module Tamber
     def initialize(message=nil)
       @message = message
     end
+  end
 
+  class NetworkError < StandardError
+    attr_reader :message
+
+    def initialize(message=nil)
+      @message = message
+    end
   end
 end

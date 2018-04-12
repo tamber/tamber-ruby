@@ -150,7 +150,35 @@ module Tamber
   end
 
   def self.handle_restclient_error(e, request_opts)
-    parse(e)
+    case e
+    when Errno::ECONNREFUSED
+      message = "Could not connect to Tamber at #{api_url}. " \
+      "Please check that your internet connection and DNS are working by running " \
+      "'host tamber.com' from the command line and try again. " \
+      "Still borked? Email us at support@tamber.com and we'll get to the bottom of it."
+
+    when RestClient::Timeout
+      message = "Could not connect to Tamber at #{api_url}. " \
+      "Please check your internet connection and try again. " \
+      "Still borked? Email us at support@tamber.com and we'll get to the bottom of it."
+
+    when RestClient::SSLCertificateNotVerified
+      message = "Could not establish a secure connection to Tamber, you may " \
+                "need to upgrade your OpenSSL version. To check, try running " \
+                "'openssl s_client -connect api.tamber.com:443' from the " \
+                "command line."
+
+    when RestClient::ServerBrokeConnection
+      message = "Connection was broken before the request could complete (either by " \
+      "the Tamber server or a network failure)."
+
+    else
+      message = "Unexpected request error. If this problem persists, please let us know by " \
+      "emailing us at support@tamber.com."
+
+    end
+
+    raise NetworkError.new(message + "\n\n(#{e.message})")
   end
 
   def self.execute_request(opts)
@@ -163,7 +191,7 @@ module Tamber
       if response["success"]
         response = response["result"]
       else
-        raise TamberError.new("Error: "+response["error"])
+        raise TamberError.new(response["error"])
       end
     rescue JSON::ParserError
       raise general_api_error(response.body)
@@ -182,7 +210,7 @@ module Tamber
     rescue NoMethodError => e
       # Work around RestClient bug
       if e.message =~ /\WRequestFailed\W/
-        raise TamberError.new('Error: Unexpected HTTP response code')
+        raise TamberError.new('Unexpected HTTP response code')
       else
         raise
       end

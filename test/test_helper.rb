@@ -10,6 +10,8 @@ class Test::Unit::TestCase
   setup do
     Tamber.project_key = "Mu6DUPXdDYe98cv5JIfX"
     Tamber.engine_key = "SbWYPBNdARfIDa0IIO9L"
+    Tamber.open_timeout = 3
+    Tamber.read_timeout = 2
   end
 
   teardown do

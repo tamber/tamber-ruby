@@ -196,6 +196,15 @@ rescue TamberError => error
 end
 ```
 
+### Timeout Configuration
+
+Open and read timeouts are configurable:
+
+```rb
+Tamber.open_timeout = 1
+Tamber.read_timeout = 5
+```
+
 See [Tests](https://github.com/tamber/tamber-ruby/tree/master/test) for more examples.
 
 [homepage]: https://tamber.com
