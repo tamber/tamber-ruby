@@ -157,7 +157,7 @@ module Tamber
       "'host tamber.com' from the command line and try again. " \
       "Still borked? Email us at support@tamber.com and we'll get to the bottom of it."
 
-    when RestClient::Timeout
+    when RestClient::RequestTimeout
       message = "Could not connect to Tamber at #{api_url}. " \
       "Please check your internet connection and try again. " \
       "Still borked? Email us at support@tamber.com and we'll get to the bottom of it."
