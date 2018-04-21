@@ -64,7 +64,7 @@ The primary methods of discovery in Tamber are the `Discover.next` and `Discover
 
 #### Up Next
 
-Don't make an item page a deadend. Keep users engaged by creating paths of discovery as they navigate from item to item, always showing the right mix of items they should check out next. Just add the id of the item that the user is navigating to / looking at.
+Don't make an item page a deadend. Keep users engaged by creating paths of discovery as they navigate from item to item, always showing the right mix of items they should check out next. Just supply the user and the item that they are navigating to / looking at.
 
 ```rb
 begin
@@ -150,19 +150,19 @@ Tamber allows you to use lower-level methods to get lists of recommended items, 
 
 ```rb
 begin
-  Tamber::Discover.basicRecommended(user: 'user_rlox8k927z7p').each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
+  Tamber::Discover::Basic.recommended(user: 'user_rlox8k927z7p').each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
 rescue TamberError => error
   puts error.message
 end
 
 begin
-  Tamber::Discover.basicSimilar(item: 'item_wmt4fn6o4zlk').each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
+  Tamber::Discover::Basic.Similar(item: 'item_wmt4fn6o4zlk').each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
 rescue TamberError => error
   puts error.message
 end
 
 begin
-  Tamber::Discover.basicRecommendedSimilar(
+  Tamber::Discover::Basic.RecommendedSimilar(
     user: 'user_rlox8k927z7p',
     item: 'item_wmt4fn6o4zlk'
   ).each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
