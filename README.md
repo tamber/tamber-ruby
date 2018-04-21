@@ -60,29 +60,11 @@ end
 
 Once you have tracked enough events and created your engine, it's time to put personalized recommendations in your app.
 
-The primary method of discovery in Tamber is the `Discover.next` method, which returns the optimal set of items that the user should be shown next.
-
-#### For You
-
-To put personalized recommendations on your homepage, or in any recommended section, just call `Discover.next` with the given user's id and the number of recommendations you want to display.
-
-```rb
-Tamber.project_key = 'your_project_key'
-
-begin
-  d = Tamber::Discover.next(
-    user: 'user_rlox8k927z7p',
-    number: 10
-  )
-  d.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
-rescue TamberError => error
-  puts error.message
-end
-```
+The primary methods of discovery in Tamber are the `Discover.next` and `Discover.recommended` methods, which returns the optimal set of items that the user should be shown next on a given item page, and in a personalized recommendations section, respectively.
 
 #### Up Next
 
-Keep users engaged by creating a path of discovery as they navigate from item to item, always showing the right mix of items they should check out next. Just add the id of the item that the user is navigating to / looking at.
+Don't make an item page a deadend. Keep users engaged by creating paths of discovery as they navigate from item to item, always showing the right mix of items they should check out next. Just add the id of the item that the user is navigating to / looking at.
 
 ```rb
 begin
@@ -97,12 +79,30 @@ rescue TamberError => error
 end
 ```
 
+#### For You
+
+To put personalized recommendations on your homepage, or in any recommended section, just call `Discover.recommended` with the given user's id and the number of recommendations you want to display.
+
+```rb
+Tamber.project_key = 'your_project_key'
+
+begin
+  d = Tamber::Discover.recommended(
+    user: 'user_rlox8k927z7p',
+    number: 10
+  )
+  d.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
+rescue TamberError => error
+  puts error.message
+end
+```
+
 
 ##### `continuation`
 
-`Discover.next` is optimized for the exact moment and context of the user at the time of request, so standard pagination is not possible. Instead, `Discover.next` uses automatic continuation to allow you to 'show more' or implement infinite scrolling. 
+Recommendations are optimized for the exact moment and context of the user at the time of request, but sometimes a user wants to see more recommended items than are shown by default. In order to 'Show More', Tamber supports automatic continuation. 
 
-When you want to add more recommendations to those currently displayed to the user, just set the `continuation` field to `true`. Tamber will automatically generate the set of items that should be appended to the current user-session's list. The `Discover.next` user-session is reset when `Discover.next` is called without `continuation`.
+When you want to add more recommendations to those currently displayed to the user, just set the `continuation` field to `true`. Tamber will automatically generate the set of items that should be appended to the current user-session's list. The user-session is reset when `Discover.recommended` or `Discover.next` is called without `continuation`.
 
 ```rb
 Tamber.project_key = 'your_project_key'
@@ -150,19 +150,19 @@ Tamber allows you to use lower-level methods to get lists of recommended items, 
 
 ```rb
 begin
-  Tamber::Discover.recommended(user: 'user_rlox8k927z7p').each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
+  Tamber::Discover.basicRecommended(user: 'user_rlox8k927z7p').each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
 rescue TamberError => error
   puts error.message
 end
 
 begin
-  Tamber::Discover.similar(item: 'item_wmt4fn6o4zlk').each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
+  Tamber::Discover.basicSimilar(item: 'item_wmt4fn6o4zlk').each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
 rescue TamberError => error
   puts error.message
 end
 
 begin
-  Tamber::Discover.recommendedSimilar(
+  Tamber::Discover.basicRecommendedSimilar(
     user: 'user_rlox8k927z7p',
     item: 'item_wmt4fn6o4zlk'
   ).each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}

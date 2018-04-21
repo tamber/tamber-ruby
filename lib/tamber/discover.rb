@@ -1,6 +1,5 @@
 module Tamber
   class Discover < APIResource
-
     def self.next(params={})
       response = request(:get, self.next_url, params)
       Util.convert_to_tamber_object(response)
@@ -11,15 +10,15 @@ module Tamber
       Util.convert_to_tamber_object(response)
     end 
 
-    def self.similar(params={})
-      response = request(:get, self.similar_url, params)
+    def self.weekly(params={})
+      response = request(:get, self.weekly_url, params)
       Util.convert_to_tamber_object(response)
-    end
+    end 
 
-    def self.recommendedSimilar(params={})
-      response = request(:get, self.recommendedSimilar_url, params)
+    def self.daily(params={})
+      response = request(:get, self.daily_url, params)
       Util.convert_to_tamber_object(response)
-    end
+    end 
 
     def self.meta(params={})
       response = request(:get, self.meta_url, params)
@@ -46,20 +45,22 @@ module Tamber
       Util.convert_to_tamber_object(response)
     end
 
+    
+
     def self.recommended_url
       url + '/recommended'
     end
 
-    def self.similar_url
-      url + '/similar'
-    end
-
-    def self.recommendedSimilar_url
-      url + '/recommended_similar'
-    end
-
     def self.next_url
       url + '/next'
+    end
+
+    def self.weekly_url
+      url + '/weekly'
+    end
+
+    def self.daily_url
+      url + '/daily'
     end
 
     def self.meta_url
@@ -82,6 +83,33 @@ module Tamber
       url + '/new'
     end
 
+    class Basic < APIResource
+      def self.recommended(params={})
+        response = request(:get, self.recommended_url, params)
+        Util.convert_to_tamber_object(response)
+      end 
+
+      def self.similar(params={})
+        response = request(:get, self.similar_url, params)
+        Util.convert_to_tamber_object(response)
+      end
+
+      def self.recommendedSimilar(params={})
+        response = request(:get, self.recommendedSimilar_url, params)
+        Util.convert_to_tamber_object(response)
+      end
+      def self.recommended_url
+        url + '/recommended'
+      end
+
+      def self.similar_url
+        url + '/similar'
+      end
+
+      def self.recommendedSimilar_url
+        url + '/recommended_similar'
+      end
+    end
   end
 
   # Discover requests return an array of 'discovery' objects

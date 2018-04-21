@@ -76,7 +76,7 @@ module Tamber
 
     should "return similar" do
       begin
-        d = Tamber::Discover.similar(
+        d = Tamber::Discover::Basic.similar(
           :item => 'item_i5gq90scc1'
         )
         d.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
@@ -85,7 +85,7 @@ module Tamber
 
     should "return recommendedSimilar" do
       begin
-        d = Tamber::Discover.recommendedSimilar(
+        d = Tamber::Discover::Basic.recommendedSimilar(
           :user => 'user_jctzgisbru',
           :item => 'item_i5gq90scc1'
         )

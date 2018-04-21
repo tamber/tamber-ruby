@@ -10,7 +10,11 @@ module Tamber
       if self == APIResource
         raise TamberError.new('APIResource is an abstract class.  You should perform actions on its subclasses (Event, Discover, etc.)')
       end
-      "/#{CGI.escape(class_name.downcase)}"
+      if class_name.downcase == "basic"
+        "/discover/#{CGI.escape(class_name.downcase)}"
+      else
+        "/#{CGI.escape(class_name.downcase)}"
+      end
     end
 
     def url
