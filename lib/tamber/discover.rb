@@ -1,103 +1,36 @@
 module Tamber
   class Discover < APIResource
-    def self.next(params={})
-      response = request(:get, self.next_url, params)
-      Util.convert_to_tamber_object(response)
+    %w[next recommended weekly daily meta popular hot uac new].each do |method_name|
+      define_singleton_method method_name do |params = {}|
+        response = request(:get, send("#{method_name}_url"), params)
+        Util.convert_to_tamber_object(response)
+      end
     end
 
-    def self.recommended(params={})
-      response = request(:get, self.recommended_url, params)
-      Util.convert_to_tamber_object(response)
-    end 
-
-    def self.weekly(params={})
-      response = request(:get, self.weekly_url, params)
-      Util.convert_to_tamber_object(response)
-    end 
-
-    def self.daily(params={})
-      response = request(:get, self.daily_url, params)
-      Util.convert_to_tamber_object(response)
-    end 
-
-    def self.meta(params={})
-      response = request(:get, self.meta_url, params)
-      Util.convert_to_tamber_object(response)
-    end
-
-    def self.popular(params={})
-      response = request(:get, self.popular_url, params)
-      Util.convert_to_tamber_object(response)
-    end
-
-    def self.hot(params={})
-      response = request(:get, self.hot_url, params)
-      Util.convert_to_tamber_object(response)
-    end
-
-    def self.uac(params={})
-      response = request(:get, self.uac_url, params)
-      Util.convert_to_tamber_object(response)
-    end
-
-    def self.new(params={})
-      response = request(:get, self.new_url, params)
-      Util.convert_to_tamber_object(response)
-    end
-
-    
-
-    def self.recommended_url
-      url + '/recommended'
-    end
-
-    def self.next_url
-      url + '/next'
-    end
-
-    def self.weekly_url
-      url + '/weekly'
-    end
-
-    def self.daily_url
-      url + '/daily'
-    end
-
-    def self.meta_url
-      url + '/meta'
-    end
-
-    def self.popular_url
-      url + '/popular'
-    end
-
-    def self.hot_url
-      url + '/hot'
-    end
-
-    def self.uac_url
-      url + '/uac'
-    end
-
-    def self.new_url
-      url + '/new'
+    %w[next_url new_url recommended_url weekly_url daily_url meta_url
+       popular_url hot_url uac_url].each do |method_name|
+      define_singleton_method method_name do
+        method_name_without_url = method_name.split('_')[0]
+        url + "/#{method_name_without_url}"
+      end
     end
 
     class Basic < APIResource
-      def self.recommended(params={})
-        response = request(:get, self.recommended_url, params)
-        Util.convert_to_tamber_object(response)
-      end 
-
-      def self.similar(params={})
-        response = request(:get, self.similar_url, params)
-        Util.convert_to_tamber_object(response)
+      %w[recommended similar recommendedSimilar].each do |method_name|
+        define_singleton_method method_name do |params = {}|
+          response = request(:get, send("#{method_name}_url"), params)
+          Util.convert_to_tamber_object(response)
+        end
       end
 
-      def self.recommendedSimilar(params={})
-        response = request(:get, self.recommendedSimilar_url, params)
-        Util.convert_to_tamber_object(response)
+      %w[recommended_url similar_url recommendedSimilar_url].each do |method_name|
+        define_singleton_method method_name do
+          method_name_without_url = method_name.split('_')[0]
+          method_name_without_url = Util.underscore(method_name_without_url) if method_name_without_url == 'recommendedSimilar'
+          url + "/#{method_name_without_url}"
+        end
       end
+
       def self.recommended_url
         url + '/recommended'
       end

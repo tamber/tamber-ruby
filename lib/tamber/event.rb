@@ -3,41 +3,26 @@ module Tamber
 
     extend Tamber::APIOperations::Retrieve
 
-    def self.track_url
-      url + '/track'
+    %w[track_url batch_url].each do |method_name|
+      define_singleton_method method_name do
+        method_name_without_url = method_name.split('_')[0]
+        url + "/#{method_name_without_url}"
+      end
     end
 
-    def self.batch_url
-      url + '/batch'
+    %w[meta_like_url meta_unlike_url].each do |method_name|
+      define_singleton_method method_name do
+        method_name_without_url = method_name.split('_')[1]
+        url + "/meta/#{method_name_without_url}"
+      end
     end
 
-    def self.meta_like_url
-      url + '/meta/like'
+    %w[track batch metaLike metaUnlike].each do |method_name|
+      define_singleton_method method_name do |params = {}|
+        method_name = Util.underscore(method_name) if %w[metaLike metaUnlike].include?(method_name)
+        response = request(:post, send("#{method_name}_url"), params)
+        Util.convert_to_tamber_object(response)
+      end
     end
-
-    def self.meta_unlike_url
-      url + '/meta/unlike'
-    end
-
-    def self.track(params={})
-      response = request(:post, self.track_url, params)
-      Util.convert_to_tamber_object(response)
-    end
-
-    def self.batch(params={})
-      response = request(:post, self.batch_url, params)
-      Util.convert_to_tamber_object(response)
-    end
-
-    def self.metaLike(params={})
-      response = request(:post, self.meta_like_url, params)
-      Util.convert_to_tamber_object(response)
-    end
-
-    def self.metaUnlike(params={})
-      response = request(:post, self.meta_unlike_url, params)
-      Util.convert_to_tamber_object(response)
-    end
-
   end
 end
