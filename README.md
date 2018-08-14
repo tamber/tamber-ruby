@@ -126,21 +126,21 @@ Help your users keep their fingers on the pulse of your platform by showing them
 
 ```rb
 begin
-  d = Tamber::Discover.hot() // the hottest (trending) items
+  d = Tamber::Discover.hot # the hottest (trending) items
   d.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
 end
 
 begin
-  d = Tamber::Discover.popular() // the hottest (trending) items
+  d = Tamber::Discover.popular # the hottest (trending) items
 end
 
 # BETA endpoints
 begin
-  d = Tamber::Discover.uac() // the most up-and-coming items
+  d = Tamber::Discover.uac # the most up-and-coming items
 end
 
 begin
-  d = Tamber::Discover.new() // the newest items
+  d = Tamber::Discover.new # the newest items
 end
 ```
 
