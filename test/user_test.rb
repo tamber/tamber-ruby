@@ -59,19 +59,19 @@ module Tamber
       end
     end
 
-    should "search user" do
-      begin
-        users = Tamber::User.search(
-          :filter => {
-            'city' => 'Mountain View, CA'
-          }
-        )
-        puts users.inspect
-        # assert users.length >= 1
-      rescue TamberError => error
-        puts error.message
-      end
-    end
+    # should "search user" do
+    #   begin
+    #     users = Tamber::User.search(
+    #       :filter => {
+    #         'city' => 'Mountain View, CA'
+    #       }
+    #     )
+    #     puts users.inspect
+    #     # assert users.length >= 1
+    #   rescue TamberError => error
+    #     puts error.message
+    #   end
+    # end
 
     # Breaks production test
     # should "merge user" do
