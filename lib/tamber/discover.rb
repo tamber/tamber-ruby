@@ -45,7 +45,10 @@ module Tamber
       Util.convert_to_tamber_object(response)
     end
 
-    
+    def self.uac(params={})
+      response = request(:get, self.uac_url, params)
+      Util.convert_to_tamber_object(response)
+    end
 
     def self.recommended_url
       url + '/recommended'
@@ -83,18 +86,51 @@ module Tamber
       url + '/new'
     end
 
+    class UserTrend < APIResource
+      def self.popular(params={})
+        response = request(:get, self.popular_url, params)
+        Util.convert_to_tamber_object(response)
+      end 
+
+      def self.hot(params={})
+        response = request(:get, self.hot_url, params)
+        Util.convert_to_tamber_object(response)
+      end
+
+      def self.uac(params={})
+        response = request(:get, self.uac_url, params)
+        Util.convert_to_tamber_object(response)
+      end
+
+      def self.popular_url
+        url + '/popular'
+      end
+
+      def self.hot_url
+        url + '/hot'
+      end
+
+      def self.uac_url
+        url + '/uac'
+      end
+    end
+
+    # deprecated
     class Basic < APIResource
       def self.recommended(params={})
+        warn "[DEPRECATION] `Discover.Basic.recommended` is deprecated.  Please use `Discover.recommended` instead."
         response = request(:get, self.recommended_url, params)
         Util.convert_to_tamber_object(response)
       end 
 
       def self.similar(params={})
+        warn "[DEPRECATION] `Discover.Basic.similar` is deprecated.  Please use `Discover.next` instead."
         response = request(:get, self.similar_url, params)
         Util.convert_to_tamber_object(response)
       end
 
       def self.recommendedSimilar(params={})
+        warn "[DEPRECATION] `Discover.Basic.recommendedSimilar` is deprecated.  Please use `Discover.next` instead."
         response = request(:get, self.recommendedSimilar_url, params)
         Util.convert_to_tamber_object(response)
       end

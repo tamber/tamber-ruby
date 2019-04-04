@@ -48,7 +48,10 @@ begin
     user: 'user_rlox8k927z7p',
     behavior: 'like'
     item:  'item_wmt4fn6o4zlk',
-    context: ["homepage", "featured_section"]
+    context: {
+      "page": "homepage", 
+      "section": "featured_section"
+    }
   )
 rescue TamberError => error
   puts error.message

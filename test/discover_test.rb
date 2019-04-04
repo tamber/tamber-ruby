@@ -93,5 +93,14 @@ module Tamber
       end
     end
 
+    should "return user hot" do
+      begin
+        d = Tamber::Discover::UserTrend.hot(
+          :user => 'user_jctzgisbru'
+        )
+        d.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
+      end
+    end
+
   end
 end

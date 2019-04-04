@@ -6,7 +6,8 @@ module Tamber
     extend Tamber::APIOperations::List
 
     def self.search(params={})
-      response = request(:post, url + '/search', params)
+      warn "[DEPRECATION] `User.search` is deprecated.  Please use `User.list` instead."
+      response = request(:post, url + '/list', params)
       Util.convert_to_tamber_object(response)
     end
 
