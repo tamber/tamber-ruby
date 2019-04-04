@@ -2,7 +2,7 @@
 
 Recommendation engines for developers, easy as π. Build blazing fast, head-scratchingly accurate hosted recommendation engines in minutes.
 
-The Tamber iOS SDK makes it easy to track events (user-item interactions) and get recommendations for your users inside your iOS app. 
+The Tamber iOS SDK makes it easy to track events (user-item interactions) and get recommendations for your users in real time. 
 
 [Get a free api key][homepage] to get started.
 
@@ -67,7 +67,7 @@ The primary methods of discovery in Tamber are the `Discover.next` and `Discover
 
 #### Up Next
 
-Don't make an item page a deadend. Keep users engaged by creating paths of discovery as they navigate from item to item, always showing the right mix of items they should check out next. Just supply the user and the item that they are navigating to / looking at.
+Don't make an item page a dead-end. Keep users engaged by creating paths of discovery as they navigate from item to item, always showing the right mix of items they should check out next. Just supply the user and the item that they are navigating to / looking at.
 
 ```rb
 begin
@@ -129,21 +129,21 @@ Help your users keep their fingers on the pulse of your platform by showing them
 
 ```rb
 begin
-  d = Tamber::Discover.hot() // the hottest (trending) items
+  d = Tamber::Discover.hot # the hottest (trending) items
   d.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
 end
 
 begin
-  d = Tamber::Discover.popular() // the hottest (trending) items
+  d = Tamber::Discover.popular # the most popular items
 end
 
 # BETA endpoints
 begin
-  d = Tamber::Discover.uac() // the most up-and-coming items
+  d = Tamber::Discover.uac # the most up-and-coming items
 end
 
 begin
-  d = Tamber::Discover.new() // the newest items
+  d = Tamber::Discover.new # the newest items
 end
 ```
 
