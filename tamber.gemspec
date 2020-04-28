@@ -14,7 +14,7 @@ spec = Gem::Specification.new do |s|
   s.email = ['alexi@tamber.com', 'argusdusty@tamber.com']
 
   s.add_dependency('rest-client', '~> 1.4')
-  s.add_dependency('json', '~> 1.8.1')
+  s.add_dependency('json', '>= 1.8.1')
   s.add_dependency('activesupport', '>= 4.2.4')
 
   s.add_development_dependency('mocha', '~> 0.13.2')

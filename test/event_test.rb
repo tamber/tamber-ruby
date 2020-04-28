@@ -9,8 +9,7 @@ module Tamber
           :item =>  'item_i5gq90scc1',
           :behavior => 'mention',
           :hit => true,
-          :context => ['recommended', 'detail-view'],
-          :get_recs => {}
+          :context => {'page'=>'recommended'}
         )
         puts e
       end

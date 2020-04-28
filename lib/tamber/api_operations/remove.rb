@@ -3,7 +3,7 @@ module Tamber
     module Remove
       def remove(params={})
         response = request(:get, url+"/remove", params)
-        # initialize_from(response, opts)
+        Util.convert_to_tamber_object(response)
       end
     end
   end

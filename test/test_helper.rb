@@ -9,6 +9,7 @@ class Test::Unit::TestCase
 
   setup do
     Tamber.project_key = "Mu6DUPXdDYe98cv5JIfX"
+    Tamber.api_version = "2019-6-25"
     Tamber.open_timeout = 3
     Tamber.read_timeout = 2
   end
