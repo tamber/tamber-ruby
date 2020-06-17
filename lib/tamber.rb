@@ -13,6 +13,7 @@ require 'json'
 require 'tamber/version'
 
 require 'tamber/api_operations/create'
+require 'tamber/api_operations/save'
 require 'tamber/api_operations/update'
 require 'tamber/api_operations/remove'
 require 'tamber/api_operations/retrieve'

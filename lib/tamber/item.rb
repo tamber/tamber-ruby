@@ -1,9 +1,16 @@
 module Tamber
   class Item < APIResource
     extend Tamber::APIOperations::Create
+    extend Tamber::APIOperations::Save
     extend Tamber::APIOperations::Update
     extend Tamber::APIOperations::Retrieve
     extend Tamber::APIOperations::List
+
+    # hide an item from all Discover results
+    def self.batch(params={})
+      response = request(:post, self.batch_url, params)
+      Util.convert_to_tamber_object(response)
+    end
 
     # hide an item from all Discover results
     def self.hide(params={})
@@ -21,6 +28,10 @@ module Tamber
     def self.delete(params={})
       response = request(:post, self.delete_url, params)
       Util.convert_to_tamber_object(response)
+    end
+
+    def self.batch_url
+      url + '/batch'
     end
 
     def self.hide_url

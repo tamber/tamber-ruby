@@ -13,7 +13,7 @@ spec = Gem::Specification.new do |s|
   s.authors = ['Alexi Robbins', 'Mark Canning']
   s.email = ['alexi@tamber.com', 'argusdusty@tamber.com']
 
-  s.add_dependency('rest-client', '~> 1.4')
+  s.add_dependency('rest-client', '~> 2.0')
   s.add_dependency('json', '>= 1.8.1')
   s.add_dependency('activesupport', '>= 4.2.4')
 
