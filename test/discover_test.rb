@@ -29,6 +29,13 @@ module Tamber
     #     d.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
     #   end
     # end
+     
+    # should "return new" do
+    #   begin
+    #     d = Tamber::Discover.new()
+    #     d.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
+    #   end
+    # end
 
     should "return hot" do
       begin
@@ -47,13 +54,6 @@ module Tamber
     should "return up-and-coming" do
       begin
         d = Tamber::Discover.uac()
-        d.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
-      end
-    end
-
-    should "return new" do
-      begin
-        d = Tamber::Discover.new()
         d.each { |rec| puts "item: #{rec.item}, score: #{rec.score}"}
       end
     end
