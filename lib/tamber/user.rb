@@ -28,6 +28,11 @@ module Tamber
       response = request(:post, url + '/save', params)
       Util.convert_to_tamber_object(response)
     end
+
+    def self.tests(params={})
+      response = request(:get, url + '/tests', params)
+      Util.convert_to_tamber_object(response)
+    end
     
   end
 end
